@@ -1,10 +1,6 @@
 name: Build RCC
 
 on:
-  push:
-    paths:
-      - 'qrc/**'
-      - 'res/**'
   workflow_dispatch:
 
 jobs:
