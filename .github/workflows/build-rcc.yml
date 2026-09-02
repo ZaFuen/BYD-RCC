@@ -1,0 +1,35 @@
+name: Build RCC
+
+on:
+  push:
+    paths:
+      - 'qrc/**'
+      - 'res/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '5.15.2'
+          modules: 'qtquickcontrols2'
+
+      - name: Build RCC
+        run: |
+          rcc --verbose --compress-algo zlib --format-version 1 --binary \
+            ./qrc/45cluster_theme2.qrc \
+            -o ./cluster_theme2.rcc
+
+      - name: Upload RCC artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cluster_theme2-rcc
+          path: cluster_theme2.rcc
+          retention-days: 30
