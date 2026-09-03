@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
@@ -16,6 +16,7 @@ jobs:
         with:
           version: '5.15.2'
           modules: 'qtquickcontrols2'
+          cache: 'true'
 
       - name: Build RCC
         run: |
