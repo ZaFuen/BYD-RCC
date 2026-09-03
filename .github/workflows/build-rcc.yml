@@ -24,7 +24,7 @@ jobs:
             -o ./cluster_theme2.rcc
 
       - name: Upload RCC artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cluster_theme2-rcc
           path: cluster_theme2.rcc
