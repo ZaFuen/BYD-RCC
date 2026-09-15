@@ -352,8 +352,8 @@ CenterContainer{
         }
     }
     function updateAdas3dContainer(){
-        adas3dContainerId.requestToDisplay = (DataSource.naviType !== 0x4 && (DataSource.adasTestMode === 0x01 || DataSource.adasInterfaceDisplay === 0x01 && DataSource.naviType !== 0x4
-                                                                                           && adas === 99 && DataSource.powerGear === 3 && DataSource.adasPlatform !== 0x1))
+        adas3dContainerId.requestToDisplay = (DataSource.adasTestMode === 0x01 || DataSource.adasInterfaceDisplay === 0x01 && DataSource.naviType !== 0x4
+                                                                                           && adas === 99 && DataSource.powerGear === 3 && DataSource.adasPlatform !== 0x1)
         adas3dContainerId.width = DataSource.naviType === 4? 535 : 608
         adas3dContainerId.x = DataSource.naviType === 0x4 ? 1270 : 692
     }
@@ -1180,7 +1180,7 @@ Timer {
         x:DataSource.naviType === 0x4 ? 1270 : 692
         y: DataSource.naviType === 0x4 ? 5 : 15
         priority: 3
-        requestToDisplay:(DataSource.naviType !== 0x4 && (DataSource.adasTestMode === 0x01 || DataSource.adasInterfaceDisplay === 0x01 && DataSource.naviType !== 0x4 && adas === 99 && DataSource.powerGear === 3))?true:false
+        requestToDisplay:(DataSource.adasTestMode === 0x01 || DataSource.adasInterfaceDisplay === 0x01 && DataSource.naviType !== 0x4 && adas === 99 && DataSource.powerGear === 3)?true:false
         requestToAnimateOpacity:!requestToDisplay?CenterChild.OPACITY_TO_0 :CenterChild.OPACITY_TO_1
         Component.onCompleted: {
             adas3dContainerId.visible = false
