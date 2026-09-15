@@ -10180,8 +10180,7 @@ Item {
         height: DataSource.naviTypeStore === 2 ? 340 : 
        (DataSource.themeIndex === 0x1 && DataSource.naviType !== 0x4) ? 120 : 340
         clip: false
-        //全屏导航(naviType===0x4)下隐藏ADAS小窗口；非ON挡保持可见以便预加载
-        visible: DataSource.naviType !== 0x4 || DataSource.powerGear !== 3
+        visible: true
         radius: DataSource.naviTypeStore === 2 ? 10:10
         color: "transparent"
         layer.enabled: true
@@ -10205,27 +10204,25 @@ Item {
        (DataSource.themeIndex === 0x1 && DataSource.naviType !== 0x4) ? 0.39 : 1.0
             source: DataSource.adasPlatform === 0x1 
     ? (
-        (DataSource.adasWindow === 0x2
-        && DataSource.powerGear === 3
-        && DataSource.naviTypeStore !== 2
+        (((DataSource.adasWindow === 0x2) || (DataSource.adasWindow === 0x1 && DataSource.naviTypeStore === 2)) 
+        && DataSource.powerGear === 3 
         && adAs === 0 && !(smallMap === 0 && DataSource.themeIndex === 0x2 && DataSource.naviTypeStore === 1 && noL2 === 1)
-        && ((DataSource.carBodyNeedDisplay === DataSource.UI_DISPLAY
-              && (DataSource.rearLeftBelt !== 0x01 || DataSource.rearMiddleBelt !== 0x01 || DataSource.rearRightBelt !== 0x01
+        && ((DataSource.carBodyNeedDisplay === DataSource.UI_DISPLAY 
+              && (DataSource.naviTypeStore === 2 || DataSource.rearLeftBelt !== 0x01 || DataSource.rearMiddleBelt !== 0x01 || DataSource.rearRightBelt !== 0x01 
                   || (DataSource.naviTypeStore === 1 && smallMap === 0)))
-            || DataSource.carBodyNeedDisplay !== DataSource.UI_DISPLAY))
-        ? "qrc:/qml10_25/adas2d/Adas3R1V.qml"
+            || DataSource.carBodyNeedDisplay !== DataSource.UI_DISPLAY)) 
+        ? "qrc:/qml10_25/adas2d/Adas3R1V.qml" 
         : ""
       )
     : (
-        (DataSource.naviTypeStore !== 2
-        && DataSource.adasInterfaceDisplay !== 99
-        && DataSource.powerGear === 3
+        (!(quanping === 1 && DataSource.naviTypeStore === 2)&&((DataSource.adasInterfaceDisplay !== 99) || (DataSource.adasInterfaceDisplay !== 99 && DataSource.naviTypeStore === 2)) 
+        && DataSource.powerGear === 3 
         && adAs === 0 && !(smallMap === 0 && DataSource.themeIndex === 0x2 && DataSource.naviTypeStore === 1 && noL2 === 1)
         && ((DataSource.carBodyNeedDisplay === DataSource.UI_DISPLAY
-              && (DataSource.rearLeftBelt !== 0x01 || DataSource.rearMiddleBelt !== 0x01 || DataSource.rearRightBelt !== 0x01
+              && (DataSource.naviTypeStore === 2 || DataSource.rearLeftBelt !== 0x01 || DataSource.rearMiddleBelt !== 0x01 || DataSource.rearRightBelt !== 0x01 
                   || (DataSource.naviTypeStore === 1 && smallMap === 0)))
-            || DataSource.carBodyNeedDisplay !== DataSource.UI_DISPLAY))
-        ? "qrc:/qml10_25/adas2d/Adas.qml"
+            || DataSource.carBodyNeedDisplay !== DataSource.UI_DISPLAY)) 
+        ? "qrc:/qml10_25/adas2d/Adas.qml" 
         : ""
       )
 
@@ -10233,17 +10230,15 @@ onStatusChanged: {
     if (adasLoaderId.status === Loader.Ready) {
         adasLoaderId.visible = DataSource.adasPlatform === 0x1
             ? (
-                DataSource.adasWindow === 0x2
-                && DataSource.naviTypeStore !== 2
-                && adAs === 0 && !(smallMap === 0 && DataSource.themeIndex === 0x2 && DataSource.naviTypeStore === 1 && noL2 === 1)
-                ? true
+                ((DataSource.adasWindow === 0x2) || (DataSource.adasWindow === 0x1 && DataSource.naviTypeStore === 2)) 
+                && adAs === 0 && !(smallMap === 0 && DataSource.themeIndex === 0x2 && DataSource.naviTypeStore === 1 && noL2 === 1) 
+                ? true 
                 : false
               )
             : (
-                DataSource.naviTypeStore !== 2
-                && DataSource.adasInterfaceDisplay !== 99
-                && adAs === 0 && !(smallMap === 0 && DataSource.themeIndex === 0x2 && DataSource.naviTypeStore === 1 && noL2 === 1)
-                ? true
+                ((DataSource.adasInterfaceDisplay !== 99) || (DataSource.adasInterfaceDisplay !== 99 && DataSource.naviTypeStore === 2)) 
+                && adAs === 0 && !(smallMap === 0 && DataSource.themeIndex === 0x2 && DataSource.naviTypeStore === 1 && noL2 === 1) 
+                ? true 
                 : false
               )
     }
@@ -10722,7 +10717,7 @@ onStatusChanged: {
         }else
         {
             adasContainerParentId.z = 3
-            adas3dContainerId.visible = DataSource.naviType !== 0x4 && !(DataSource.themeIndex === 0x2 && DataSource.naviTypeStore !== 0 && noL2 === 1) && adAs === 1 && ((DataSource.carBodyNeedDisplay === DataSource.UI_DISPLAY && (DataSource.naviTypeStore === 2 || DataSource.rearLeftBelt !== 0x01 || DataSource.rearMiddleBelt !== 0x01 || DataSource.rearRightBelt !== 0x01 || (DataSource.naviTypeStore === 1 && smallMap === 0))) || DataSource.carBodyNeedDisplay !== DataSource.UI_DISPLAY) ? true : false
+            adas3dContainerId.visible = !(DataSource.themeIndex === 0x2 && DataSource.naviTypeStore !== 0 && noL2 === 1) && adAs === 1 && ((DataSource.carBodyNeedDisplay === DataSource.UI_DISPLAY && (DataSource.naviTypeStore === 2 || DataSource.rearLeftBelt !== 0x01 || DataSource.rearMiddleBelt !== 0x01 || DataSource.rearRightBelt !== 0x01 || (DataSource.naviTypeStore === 1 && smallMap === 0))) || DataSource.carBodyNeedDisplay !== DataSource.UI_DISPLAY) ? true : false
         }
     }
     Timer{
